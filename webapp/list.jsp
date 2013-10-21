@@ -9,6 +9,7 @@
 <link type="text/css" rel="stylesheet" href="/images/photoApp.css"/>
 </head>
 <body>
+
 <c:forEach var="data" items="${boardAllData}">
 	<div id="upload">
 		<h2>제목 : ${data.title}</h2>

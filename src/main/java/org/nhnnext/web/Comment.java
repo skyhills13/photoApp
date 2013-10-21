@@ -7,8 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import org.nhnnext.web.Board;
-
 
 @Entity
 public class Comment {
@@ -24,13 +22,26 @@ public class Comment {
 	@ManyToOne
 	private Board board;
 	
-	public Comment(){}
+//	@ManyToOne
+//	private User user;
+	
+	public Comment(){
+		// there should be empty generator
+	}
+	
 	
 	public Comment(Board board, String contents){
 		this.board = board;
 		this.contents = contents;
 	}
 	
+//	public void setUser(User user) {
+//		this.user = user;
+//	}
+//	
+//	public User getUser() {
+//		return user;
+//	}
 	
 	public Board getBoard(){
 		return board;
@@ -40,8 +51,16 @@ public class Comment {
 		return contents;
 	}
 	
+	public void setContents(String contents) {
+		this.contents = contents;
+	}
+	
 	public int getId(){
 		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 }
