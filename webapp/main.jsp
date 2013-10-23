@@ -19,7 +19,7 @@
 	</c:choose>
 	<br>
 	<br>
- <a href = "/board/select_photo">photo application</a>
+ <a href = "/board/newPost">photo application</a>
  <a href = "/register">가입하기</a>
  
 </body>

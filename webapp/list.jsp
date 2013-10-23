@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Photo</title>
+<title>Photo List</title>
 <link type="text/css" rel="stylesheet" href="/stylesheets/confirm.css"/>
 <link type="text/css" rel="stylesheet" href="/stylesheets/button.css"/>
 </head>
@@ -41,7 +41,7 @@
 		<h1>${data.title}</h1>
 		</div>
 		<div id = "imageArea">
-		<img src = "/images/${board.fileName}" width ="400" />
+		<img src = "/images/${data.fileName}" width ="400" />
 		<br />
 		
 		</div>
@@ -50,12 +50,12 @@
 		</div>
 		</div>
 		<div class="commentsList">
-        	<c:forEach var="comment" items="${board.comments}">
+        	<c:forEach var="comment" items="${data.comments}">
         	${comment.contents}<br />
       		</c:forEach>
         </div>
         <div class="comment-reply">
-        <form action="/board/${id}/comment_ok" method="post">
+        <form action="/board/${data.id}/comment_ok" method="post">
                         <span><textarea name="contents" cols="50" rows="3"
                                         placeholder="댓글을 쓰세요"></textarea>
                                 <button>댓글쓰기</button></span>

@@ -16,9 +16,9 @@ public class BoardController {
 	@Autowired
 	private BoardRepository boardRepository;
 	
-	@RequestMapping(value = "/select_photo")
+	@RequestMapping(value = "/newPost")
 	public String selectPhoto(){
-		return "selectPhoto";
+		return "newPost";
 	}
 	
 	@RequestMapping("/{id}")

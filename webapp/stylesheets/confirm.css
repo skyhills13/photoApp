@@ -43,7 +43,7 @@ margin-top: 30px;
 	resize: none;
 	margin: 10px 0px;
 }
-
+/*inline element는 text-align으로 정렬하는 것이 굳굳*/
 
 
 #saveArea{
@@ -88,13 +88,12 @@ header a{
 #imageArea{
 	margin: 5px auto;
 	border: 1px solid #5CE6B8; 
+	text-align: center;
 }
 
 img {
 	max-width: 300px;
 	max-height: 300px;
-	border-right: 1px solid #5CE6B8;
-	/*중앙 정렬*/
 }
 
 #contentsArea{
