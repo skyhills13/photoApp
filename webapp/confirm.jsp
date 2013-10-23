@@ -5,41 +5,50 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Image Upload</title>
-<link type="text/css" rel="stylesheet" href="/images/photoApp.css"/>
+<title>confirm and reply</title>
+<link media = "screen" type="text/css" rel="stylesheet" href="/stylesheets/confirm.css"/>
+<link media = "screen" type="text/css" rel="stylesheet" href="/stylesheets/button.css"/>
 </head>
 <body>
-
-	
-		<div id="upload">
-			<h2>제목 : ${board.title}</h2>
-			내용 : ${board.contents}<br/>
-			<c:if test = "${not empty board.fileName}">
-			이미지 : ${board.fileName}<br/>
-			<img src = "/images/${board.fileName}" width ="400" />
-			<br />
-			</c:if>
-			
+		<div id = "wrap">
+		<header>
+		<a href = "/board/list">목록보기</a>
+		<a href = "/main">메인</a>
+		</header>
+	<section>
+		<div id="confirm">
+		<div id = "titleArea">
+			<h1>${board.title}</h1>
 		</div>
+		<div id = "imageArea">
+		<c:if test = "${not empty board.fileName}">
+		<img src = "/images/${board.fileName}" />
 		
-		<div class="comments">
-                        <c:forEach var="comment" items="${board.comments}">
-                        ${comment.contents}<br />
-                        </c:forEach>
+		</c:if>
+		</div>
+		<div id = "contentsArea">
+		${board.contents}<br/>
+		</div>
+	</div>
+		<div class="commentsList">
+        	<c:forEach var="comment" items="${board.comments}">
+        	${comment.contents}<br />
+      		</c:forEach>
         </div>
         <div class="comment-reply">
         <form action="/board/${id}/comment_ok" method="post">
                         <span><textarea name="contents" cols="50" rows="3"
-                                        placeholder="글쓰세요."></textarea>
-                                <button>작성</button></span>
-</form>
-      
+                                        placeholder="댓글을 쓰세요"></textarea>
+                                <button>댓글쓰기</button></span>
+		</form>
         </div>
-			
-			<br/>
-			<a href = "/board/list/">확인</a>
-			
+        <footer>
 		<br/>
-<button onclick="location.href='/board/revise/${board.id}'">수정</button>
+		<button onclick ="location.href='/board/list'">올리기</button>
+		<button onclick="location.href='/board/revise/${board.id}'">수정하기</button>
+		</footer>
+		</section>
+		
+	</div>
 </body>
 </html>
