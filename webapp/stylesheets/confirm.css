@@ -102,12 +102,21 @@ img {
 
 }
 
+.commentsArea{
+	border: 1px solid #5CE6B8;
+	 
+}
+
 .commentsList {
 	border-top: 1px solid #5CE6B8;
 	border-bottom: 1px solid #5CE6B8;
 	margin-top: 35px;
 	margin-bottom: 10px; 
 	
+}
+
+.commentsBody{
+	display: none;
 }
 
 /*이거 어케 하냠

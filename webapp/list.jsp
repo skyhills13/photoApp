@@ -8,6 +8,45 @@
 <title>Photo List</title>
 <link type="text/css" rel="stylesheet" href="/stylesheets/confirm.css"/>
 <link type="text/css" rel="stylesheet" href="/stylesheets/button.css"/>
+<script>
+function initPage() {
+	console.log('로딩이 되었느니라');
+	countComments();
+	registerEvents();
+}
+
+function countComments(){
+	var commnetList = document.querySelectorAll('.commentsList');
+	 for(var i =0 ; i < commnetList.length ; i++) {
+		var currentNode = commnetList[i];
+		var nPListCount = currentNode.querySelectorAll('p').length;
+		var showCommentsNum= currentNode.parentNode.querySelector('.commentsNum');
+		showCommentsNum.innerText = nPListCount + '개의 댓글' ;
+		 
+		console.log(nPListCount);
+	}
+}
+
+function registerEvents(){
+	var hideButtonList = document.getElementsByClassName('hideComments');
+	for ( var i = 0; i < hideButtonList.length ; i++){
+		hideButtonList[i].addEventListener('click', toggleComments, false); 
+	}
+}
+ 
+function toggleComments(e){
+	var commentsBodyNode = e.target.parentNode.parentNode.querySelector('.commentsBody');
+	var commentsStyle = window.getComputedStyle(commentsBodynode);
+	display = commentsStyle.getPropertyValue(display);
+	
+	
+} 
+
+
+window.onload = initPage;
+
+
+</script>
 </head>
 <body>
 <div id = "wrap">
@@ -49,9 +88,18 @@
 		${data.contents}<br/>
 		</div>
 		</div>
+		<div class = "commentsArea">
+		<div class = "commentsHeader">
+		<div class = "commentsNum">
+		</div>
+		<div class = "hideComments">
+		<a href = "#"> 댓글 펼치기 </a>
+		</div>
+		</div>
+		<div class = "commentsBody">
 		<div class="commentsList">
         	<c:forEach var="comment" items="${data.comments}">
-        	${comment.contents}<br />
+        	<p>${comment.contents}</p>
       		</c:forEach>
         </div>
         <div class="comment-reply">
@@ -61,7 +109,8 @@
                                 <button>댓글쓰기</button></span>
 		</form>
         </div>
-		
+        </div>
+		</div>
 		<br/>
 		<button onclick="location.href='/board/revise/${data.id}'">수정</button>
 		<button onclick="location.href='/board/delete/${data.id}'">삭제</button>
