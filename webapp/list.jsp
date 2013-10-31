@@ -20,7 +20,7 @@ function countComments(){
 	 for(var i =0 ; i < commnetList.length ; i++) {
 		var currentNode = commnetList[i];
 		var nPListCount = currentNode.querySelectorAll('p').length;
-		var showCommentsNum= currentNode.parentNode.querySelector('.commentsNum');
+		var showCommentsNum= currentNode.parentNode.parentNode.querySelector('.commentsNum');
 		showCommentsNum.innerText = nPListCount + '개의 댓글' ;
 		 
 		console.log(nPListCount);
@@ -35,9 +35,9 @@ function registerEvents(){
 }
  
 function toggleComments(e){
-	var commentsBodyNode = e.target.parentNode.parentNode.querySelector('.commentsBody');
-	var commentsStyle = window.getComputedStyle(commentsBodynode);
-	display = commentsStyle.getPropertyValue(display);
+	var commentsBodyNode = e.target.parentNode.parentNode.parentNode.querySelector('.commentsBody');
+	commentsBodyNode.style.display = "block";
+	e.preventDefault();
 	
 	
 } 
