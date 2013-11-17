@@ -8,11 +8,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 @RequestMapping("/board")
 public class BoardController {
+	
+	private static final Logger log = LoggerFactory.getLogger(BoardController.class);
+	
 	@Autowired
 	private BoardRepository boardRepository;
 	
@@ -27,12 +33,12 @@ public class BoardController {
 		model.addAttribute("board", LatestSavedBoard);
 		return "confirm";
 	}
-	
 
 
 	
 	@RequestMapping(value = "/selected", method = RequestMethod.POST) //default is GET
 	public String create(Board board, MultipartFile attachment){
+		log.debug("board:{}",board);
 		System.out.println("board" + board);
 		FileUploader.upload(attachment);
 		board.setFileName(attachment.getOriginalFilename());
@@ -46,6 +52,15 @@ public class BoardController {
 		model.addAttribute("boardAllData", boardAllData);
 		return "list";
 	}
+	
+	//.json일수도 있어 
+		@RequestMapping(value = "/board.json", method = RequestMethod.POST)
+		public @ResponseBody Board straightUpload(Board board, MultipartFile file){
+			String fileName = FileUploader.upload(file);
+			board.setFileName(fileName);
+			System.out.println("/board/board.json으로 왔다");
+			return boardRepository.save(board);
+		}
 	
 	@RequestMapping("/revise/{id}")
 	public String modify(@PathVariable Long id, Model model) {

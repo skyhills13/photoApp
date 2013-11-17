@@ -13,6 +13,9 @@ function initPage() {
 	console.log('로딩이 되었느니라');
 	countComments();
 	registerEvents();
+	XHRorAttachment();
+	XMLForsubmit();
+	
 }
 
 function countComments(){
@@ -33,15 +36,59 @@ function registerEvents(){
 		hideButtonList[i].addEventListener('click', toggleComments, false); 
 	}
 }
- 
+
 function toggleComments(e){
+	e.preventDefault();
+	var commentsBodyNode = e.target.parentNode.parentNode.parentNode.querySelector('.commentsBody');
+	commentsBodyNode.style.display = (commentsBodyNode.style.display != 'block' ? 'block' : 'none');
+}
+ 
+ 
+ 
+/* function toggleComments(e){
 	var commentsBodyNode = e.target.parentNode.parentNode.parentNode.querySelector('.commentsBody');
 	commentsBodyNode.style.display = "block";
-	e.preventDefault();
-	
-	
-} 
+	e.preventDefault();	
+} */ 
 
+//window.onload = initPage;
+
+function showsXHRorAttachment(){
+	var formList = document.querySelector('.commentWrite input[type = submit]');
+	for(var j = 0; j < formList.length ; j++ ){
+		formList[j].addEventListener('click', writeComments, false);
+	}
+}
+
+function writeComments(e){
+	e.preventDefault(); //자동으로 동작하는 것을 막음
+	var eleForm = e.currentTarget.form;
+	var oFormData = new FormData(eleForm);
+	var sID = eleForm[0].value;
+	var url = "/board/" + sID + "/comment_ok.json";
+	
+	var request = new XMLHttpRequest();
+	request.open("POST", url, true);
+	
+	
+	
+	request.onreadystatechange = function(){
+		if(request.readyState == 4 && request.status == 200){
+			console.log("응답하여따 헿")
+			var obj = JSON.parse(request.responseText);
+			
+			//여기는 필요한 데이터 추출
+			var eleCommentList = eleForm.previousElementSibling.previousElementSibling;
+			eleCommentList.insertAdjacentHTML('beforeend', '<p><span>' + obj.contents + '</span></p>');
+			
+			var nPListCount = eleCommentList.querySelectorAll('span').length;
+			var comCounter = eleCommentList.parentNode.previousElementSibling;
+			comCounter.innerHTML = nPListCount + "개의 댓글"; 
+		}
+	}
+	
+	request.send(oFormData);
+}
 
 window.onload = initPage;
 
@@ -103,10 +150,15 @@ window.onload = initPage;
       		</c:forEach>
         </div>
         <div class="comment-reply">
-        <form action="/board/${data.id}/comment_ok" method="post">
+        <form action="/board/${data.id}/comment_ok" name = "commentWrite" method="post">
+                        <input type = "hidden" name = "id" value= "${board.id}">
+                        <input type = "text" placeholder= "댓글을 쓰세요" name = "comment">
+                        
+                        <!--
                         <span><textarea name="contents" cols="50" rows="3"
                                         placeholder="댓글을 쓰세요"></textarea>
-                                <button>댓글쓰기</button></span>
+                                 <button>댓글쓰기</button></span>
+                                 -->
 		</form>
         </div>
         </div>
