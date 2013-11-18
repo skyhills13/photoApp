@@ -16,7 +16,7 @@ public class Comment {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
+	private Long id;
 	
 	@Column(length = 1000, nullable = false )
 	private String contents;
@@ -58,11 +58,11 @@ public class Comment {
 		this.contents = contents;
 	}
 	
-	public int getId(){
+	public Long getId(){
 		return id;
 	}
 	
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	
