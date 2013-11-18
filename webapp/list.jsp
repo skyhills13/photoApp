@@ -15,7 +15,6 @@
 		registerEvents();
 		showXHRorAttachment();
 		/* XMLForsubmit(); */
-
 	}
 
 	function countComments() {
@@ -25,7 +24,7 @@
 			var nPListCount = currentNode.querySelectorAll('p').length;
 			var showCommentsNum = currentNode.parentNode.parentNode
 					.querySelector('.commentsNum');
-			showCommentsNum.innerText = nPListCount + '개의 댓글';
+			showCommentsNum.innerText = nPListCount;
 
 			console.log(nPListCount);
 		}
@@ -54,8 +53,7 @@
 
 	//window.onload = initPage;
 	function showXHRorAttachment() {
-		var formList = document
-				.querySelectorAll('.cmtSubmit');
+		var formList = document.querySelectorAll('.cmtSubmit');
 		for (var j = 0; j < formList.length; j++) {
 			formList[j].addEventListener('click', writeComments, false);
 		}
@@ -63,28 +61,35 @@
 
 	function writeComments(e) {
 		e.preventDefault(); //자동으로 동작하는 것을 막음
-		var eleForm = e.currentTarget.form;
+
+		var ele = e.currentTarget;
+		var eleForm = ele.form;
 		var oFormData = new FormData(eleForm);
-		var sID = eleForm[0].value;
+
+		console.log(ele);
+		var sID = parseInt(ele.parentNode.children[0].value);
+		console.log(sID);
+
+		console.log("sID : " + sID);
+
 		var url = "/board/" + sID + "/comment_ok.json";
 
 		var request = new XMLHttpRequest();
 		request.open("POST", url, true);
-
-		console.log("int comment method");
-		console.log(document.querySelector(".commentsList").children[0]);
-
 		request.onreadystatechange = function() {
 			if (request.readyState == 4 && request.status == 200) {
 				console.log("응답하여따 헿")
 				var obj = JSON.parse(request.responseText);
-
+				var targetNode = document.querySelector(".commentsList");
+				var htmlString = '<p>'+obj.contents+'</p>';
+				targetNode.insertAdjacentHTML('beforeend', htmlString);
 				//여기는 필요한 데이터 추출
-				/* var eleCommentList = eleForm.previousElementSibling.previousElementSibling;
-				eleCommentList.insertAdjacentHTML('beforeend', '<p><span>'
-						+ obj.contents + '</span></p>');
-
-				var nPListCount = eleCommentList.querySelectorAll('span').length;
+				
+				var cmtNumNode = document.querySelector(".commentsNum");
+				var cmtTotalNum = parseInt(cmtNumNode.innerHTML);
+				cmtNumNode.innerHTML = cmtTotalNum+1;
+				
+				/* var nPListCount = eleCommentList.querySelectorAll('span').length;
 				var comCounter = eleCommentList.parentNode.previousElementSibling;
 				comCounter.innerHTML = nPListCount + "개의 댓글"; */
 			}
@@ -143,7 +148,10 @@
 				</div>
 				<div class="commentsArea">
 					<div class="commentsHeader">
-						<div class="commentsNum"></div>
+						<div class="commentNumArea">
+							<p class="commentsNum"></p>
+							<p>개의 댓글</p>
+						</div>
 						<div class="hideComments">
 							<a href="#"> 댓글 펼치기 </a>
 						</div>
@@ -157,13 +165,13 @@
 						</div>
 						<div class="comment-reply">
 							<form action="#" name="commentWrite" method="post">
-							<input type="hidden" name="id" value="${board.id}">
-							<!-- <input type = "text" placeholder= "댓글을 쓰세요" name = "comment">
+								<input type="hidden" name="id" value="${data.id}" />
+								<!-- <input type = "text" placeholder= "댓글을 쓰세요" name = "comment">
                         -->
-							<span><textarea name="contents" cols="50" rows="3"
+								<textarea name="contents" cols="50" rows="3"
 									placeholder="댓글을 쓰세요"></textarea>
-								<button class="cmtSubmit">댓글쓰기</button></span>
-								</form>
+								<button class="cmtSubmit">댓글쓰기</button>
+							</form>
 						</div>
 					</div>
 				</div>
