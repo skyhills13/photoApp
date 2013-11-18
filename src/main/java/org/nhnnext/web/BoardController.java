@@ -35,7 +35,6 @@ public class BoardController {
 	}
 
 
-	
 	@RequestMapping(value = "/selected", method = RequestMethod.POST) //default is GET
 	public String create(Board board, MultipartFile attachment){
 		log.debug("board:{}",board);
@@ -43,7 +42,8 @@ public class BoardController {
 		FileUploader.upload(attachment);
 		board.setFileName(attachment.getOriginalFilename());
 		Board savedBoard = boardRepository.save(board);
-		return "redirect:/board/"+ savedBoard.getId() ;
+		//return "redirect:/board/"+ savedBoard.getId() ;
+		return "redirect:/board/list";
 	}
 	
 	@RequestMapping("/list")
