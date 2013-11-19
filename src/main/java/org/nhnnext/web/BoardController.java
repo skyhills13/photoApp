@@ -1,5 +1,6 @@
 package org.nhnnext.web;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.nhnnext.repository.BoardRepository;
@@ -55,6 +56,8 @@ public class BoardController {
 	@RequestMapping("/list")
 	public String showList(Model model) {
 		Iterable<Board> boardAllData = boardRepository.findAll();
+		Collections.reverse((List<Board>) boardAllData);
+		
 		model.addAttribute("boardAllData", boardAllData);
 		return "list";
 	}

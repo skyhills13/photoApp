@@ -35,8 +35,33 @@
 		for (var i = 0; i < hideButtonList.length; i++) {
 			hideButtonList[i].addEventListener('click', toggleComments, false);
 		}
+		
+		var cmtDelBtns = document.querySelectorAll('.cmtDelBtn');
+		for (var i = 0; i < cmtDelBtns.length; i++) {
+			cmtDelBtns[i].addEventListener('click', deleteComment, false);
+		}
+		
 	}
 
+	function deleteComment(e) {
+		e.preventDefault();
+	
+		var formData = new FormData();
+		
+		var targetNode = e.currentTarget;
+		var id = targetNode.parendNode.children[0].value;
+		var url = "/board/delete_comment/"+id+".json";
+		
+		var request - new XMLHttpRequest();
+		request.open("POST", url, true);
+		request.onreadystatechange = function(){
+			if(request.readyState == 4 && request.status == 200) {
+				targetNode.parentNode.style.display="none";
+				
+			}	
+		}
+	}
+	
 	function toggleComments(e) {
 		e.preventDefault();
 		var commentsBodyNode = e.target.parentNode.parentNode.parentNode
@@ -156,8 +181,9 @@
 					<div class="commentsBody">
 						<div class="commentsList">
 							<c:forEach var="comment" items="${data.comments}">
+								<input type="hidden" value="data.id"/>
 								<p>${comment.contents}</p>
-
+								<button class="cmtDelBtn">삭제</button>
 							</c:forEach>
 						</div>
 						<div class="comment-reply">
