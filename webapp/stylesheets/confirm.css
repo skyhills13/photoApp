@@ -131,6 +131,10 @@ img {
 	width: 100%; /*size 맞추려면 어케 해야되는지*/
 }
 
+.commentNumArea *{
+	display:inline-block;
+}
+
 .comment-reply button{
 	float: right;
 }

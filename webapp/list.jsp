@@ -89,9 +89,6 @@
 				var cmtTotalNum = parseInt(cmtNumNode.innerHTML);
 				cmtNumNode.innerHTML = cmtTotalNum+1;
 				
-				/* var nPListCount = eleCommentList.querySelectorAll('span').length;
-				var comCounter = eleCommentList.parentNode.previousElementSibling;
-				comCounter.innerHTML = nPListCount + "개의 댓글"; */
 			}
 		}
 
@@ -104,7 +101,7 @@
 <body>
 	<div id="wrap">
 		<header>
-			<a href="/board/list">목록보기</a> <a href="/">메인</a>
+			<a href="/board/list">목록보기</a> <a href="/">메인</a> <a>${sessionScope.userId}</a>
 		</header>
 		<div id="formArea">
 			<form action="/board/selected" method="POST"

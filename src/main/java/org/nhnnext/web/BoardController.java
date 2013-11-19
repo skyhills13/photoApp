@@ -1,7 +1,12 @@
 package org.nhnnext.web;
 
+import java.util.List;
+
 import org.nhnnext.repository.BoardRepository;
+import org.nhnnext.repository.CommentRepository;
 import org.nhnnext.support.FileUploader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Controller
 @RequestMapping("/board")
@@ -21,6 +24,9 @@ public class BoardController {
 	
 	@Autowired
 	private BoardRepository boardRepository;
+	
+	@Autowired
+	private CommentRepository commentRepository;
 	
 	@RequestMapping(value = "/newPost")
 	public String selectPhoto(){
@@ -56,9 +62,10 @@ public class BoardController {
 	//.json일수도 있어 
 		@RequestMapping(value = "/board.json", method = RequestMethod.POST)
 		public @ResponseBody Board straightUpload(Board board, MultipartFile file){
+			log.debug("board:{}", board);
 			String fileName = FileUploader.upload(file);
 			board.setFileName(fileName);
-			System.out.println("/board/board.json으로 왔다");
+			//System.out.println("/board/board.json으로 왔다");
 			return boardRepository.save(board);
 		}
 	
@@ -71,6 +78,12 @@ public class BoardController {
 	
 	@RequestMapping("/delete/{id}")
 	public String delete(@PathVariable Long id, Model model) {
+		List<Comment> list = boardRepository.findOne(id).getComments();
+		
+		for (Comment comment : list) {
+			commentRepository.delete(comment.getId());
+		}
+		
 		boardRepository.delete(id);
 		return "redirect:/board/list";
 	}
