@@ -115,6 +115,10 @@ img {
 	
 }
 
+.commentsList > div *{
+	display:inline-block;
+}
+
 .commentsBody{
 	display: none;
 }

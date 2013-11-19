@@ -110,8 +110,17 @@
 			if (request.readyState == 4 && request.status == 200) {
 				console.log("응답하여따 헿")
 				var obj = JSON.parse(request.responseText);
-				var targetNode = document.querySelector(".commentsList");
-				var htmlString = '<p>'+obj.contents+'</p>';
+				var targetNode = ele.parentNode.parentNode.previousElementSibling;
+				
+				console.log(targetNode);
+				
+				
+				
+				var htmlString = "<div><input type='hidden' value='${comment.id}'/><p>"
+				+ obj.contents+ "</p><button class='cmtDelBtn'>삭제</button></div>";
+					
+					
+					/* '<p>'+obj.contents+'</p>'; */
 				targetNode.insertAdjacentHTML('beforeend', htmlString);
 				//여기는 필요한 데이터 추출
 				
