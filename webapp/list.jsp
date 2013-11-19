@@ -49,17 +49,22 @@
 		var formData = new FormData();
 		
 		var targetNode = e.currentTarget;
-		var id = targetNode.parendNode.children[0].value;
+		
+		var id = targetNode.parentNode.children[0].value;
 		var url = "/board/delete_comment/"+id+".json";
 		
-		var request - new XMLHttpRequest();
+		var request = new XMLHttpRequest();
 		request.open("POST", url, true);
 		request.onreadystatechange = function(){
 			if(request.readyState == 4 && request.status == 200) {
 				targetNode.parentNode.style.display="none";
 				
+				var cmtNumNode = document.querySelector('.commentsNum');
+				cmtNumNode.innerHTML = parseInt(cmtNumNode.innerHTML)-1;
 			}	
 		}
+		
+		request.send(formData);
 	}
 	
 	function toggleComments(e) {
@@ -181,9 +186,11 @@
 					<div class="commentsBody">
 						<div class="commentsList">
 							<c:forEach var="comment" items="${data.comments}">
-								<input type="hidden" value="data.id"/>
-								<p>${comment.contents}</p>
-								<button class="cmtDelBtn">삭제</button>
+								<div>
+									<input type="hidden" value="${comment.id}"/>
+									<p>${comment.contents}</p>
+									<button class="cmtDelBtn">삭제</button>
+								</div>
 							</c:forEach>
 						</div>
 						<div class="comment-reply">
