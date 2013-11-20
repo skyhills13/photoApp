@@ -79,6 +79,14 @@ public class BoardController {
 		return "revise";
 	}
 	
+	@RequestMapping("/revise/confirm/{id}")
+	public String modifyConfirm(@PathVariable Long id, Board board) {
+		//Board getBoardData = boardRepository.findOne(id);
+		boardRepository.save(board);
+		
+		return "redirect:/board/list";
+	}
+	
 	@RequestMapping("/delete/{id}")
 	public String delete(@PathVariable Long id, Model model) {
 		List<Comment> list = boardRepository.findOne(id).getComments();

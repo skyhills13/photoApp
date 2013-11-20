@@ -7,7 +7,7 @@
 <title>수정</title>
 </head>
 <body>
-	<form action="/board" method="post" enctype="multipart/form-data">
+	<form action="/board/revise/confirm/${data.id}" method="post" enctype="multipart/form-data">
 		<label for="title"> Title </label>
 		 <input type="text" name="title" id="title" size="30" value="${data.title}"/> <br />
 		<textarea name="contents" rows="4" cols="30">${data.contents}</textarea><br /> 
