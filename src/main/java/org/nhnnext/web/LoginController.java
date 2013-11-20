@@ -36,6 +36,7 @@ public class LoginController {
 		
 		System.out.println("You are" + userId);
 		session.setAttribute("userId", userId);
+		//session에서 받아온 정보를 셋팅하는 부분 
 		return "redirect:/";
 		} 
 	

@@ -51,20 +51,25 @@
 		var targetNode = e.currentTarget;
 		
 		var id = targetNode.parentNode.children[0].value;
-		var url = "/board/delete_comment/"+id+".json";
+		var url = "/board/delete_comment/"+id+".json"; //이  url에서 처리중 controller로 전달 
 		
-		var request = new XMLHttpRequest();
+		var request = new XMLHttpRequest(); //xHR통신 하는 부분  
+		//form에 입력되어있는 id comment등의 데이터를 xml형태로 바꿔준다. 
 		request.open("POST", url, true);
 		request.onreadystatechange = function(){
+		//controller에서 responsebody부분이 서버에서 응답하는 부분
+		// 이함수에서 그 응답을 받아서 기다리고 있다가 처리한다 
 			if(request.readyState == 4 && request.status == 200) {
 				targetNode.parentNode.style.display="none";
+				//정상적인 응답의 형태가 4랑 200인것 
 				
 				var cmtNumNode = document.querySelector('.commentsNum');
 				cmtNumNode.innerHTML = parseInt(cmtNumNode.innerHTML)-1;
+				
 			}	
 		}
 		
-		request.send(formData);
+		request.send(formData);//server로 xml화 데이터 전송 
 	}
 	
 	function toggleComments(e) {
@@ -110,6 +115,8 @@
 			if (request.readyState == 4 && request.status == 200) {
 				console.log("응답하여따 헿")
 				var obj = JSON.parse(request.responseText);
+				//json형태로 온 응답을 파싱해서 object형태로 저장
+				//object는 key value 형태로 되어있으니까, 우리도 그렇게 받는거. 
 				var targetNode = ele.parentNode.parentNode.previousElementSibling;
 				
 				console.log(targetNode);
