@@ -42,8 +42,39 @@
 		}
 		
 	}
+	
+	/* function deleteComment(e) {
+		e.preventDefault(); //자동으로 동작하는 것을 막음
 
-	function deleteComment(e) {
+		var ele = e.currentTarget;
+		var eleForm = ele.form;
+		var oFormData = new FormData(eleForm);
+
+		console.log(ele);
+		var sID = parseInt(ele.parentNode.children[0].value);
+		console.log(sID);
+
+		console.log("sID : " + sID);
+
+		var url = "/board/delete_comment/"+id+".json";
+
+		var request = new XMLHttpRequest();
+		request.open("POST", url, true);
+		request.onreadystatechange = function() {
+			if (request.readyState == 4 && request.status == 200) {
+				console.log("응답하여따 헿")
+				console.log(ele.parentNode.children)
+				var cmtNumNode = document.querySelector(".commentsNum");
+				var cmtTotalNum = parseInt(cmtNumNode.innerHTML);
+				cmtNumNode.innerHTML = cmtTotalNum-1;
+				
+			}
+		}
+
+		request.send(oFormData);
+	} */
+	
+	 function deleteComment(e) {
 		e.preventDefault();
 	
 		var formData = new FormData();
@@ -70,7 +101,7 @@
 		}
 		
 		request.send(formData);//server로 xml화 데이터 전송 
-	}
+	} 
 	
 	function toggleComments(e) {
 		e.preventDefault();
@@ -205,7 +236,7 @@
 								<div>
 									<input type="hidden" value="${comment.id}"/>
 									<p>${comment.contents}</p>
-									<button class="cmtDelBtn">삭제</button>
+									<button onclick = "location.href='/board/delete_comment/${comment.id}'" class="cmtDelBtn">삭제</button>
 								</div>
 							</c:forEach>
 						</div>

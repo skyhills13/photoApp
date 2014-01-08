@@ -2,6 +2,7 @@
 <!DOCTYPE configuration>
 <configuration>
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+	<!-- fileappender로 바꾸면 로그 파일로 남아 --> 
 		<encoder>
 			<pattern>%d{HH:mm:ss.SSS} %-5level [%thread][%logger{0}] %m%n</pattern> 
 		</encoder>

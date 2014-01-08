@@ -7,8 +7,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Main</title>
+<link type="text/css" rel="stylesheet" href="/stylesheets/main.css" />
 </head>
 <body>
+<div id = "wrap">
+<div id = "login_status">
 	<c:choose>
 		<c:when test="${not empty sessionScope.userId}">
 			<a href="/logout">로그아웃 하기</a>
@@ -17,10 +20,11 @@
 			<a href="login">로그인하기</a>
 		</c:otherwise>
 	</c:choose>
-	<br>
-	<br>
-	<a href="/board/list">photo application</a>
-	<a href="/register">가입하기</a>
-
+	</div>
+	<div id = "enter_contents">
+	<a href="/board/list">photo application</a></div>
+	<div id = "register_service">
+	<a href="/register">가입하기</a></div>
+</div>
 </body>
 </html>

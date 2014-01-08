@@ -1,0 +1,14 @@
+@CHARSET "US-ASCII";
+
+a{
+	text-decoration: none;
+}
+
+#wrap {
+	padding: 30px;
+	margin: auto;
+	position: relative;
+	height : 10%;
+	width: 10%;
+	border: 1px solid;
+}

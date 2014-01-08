@@ -1,6 +1,7 @@
 package org.nhnnext.web;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import org.nhnnext.repository.BoardRepository;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.google.gson.Gson;
 
 @Controller
 @RequestMapping("/board")
@@ -45,6 +48,7 @@ public class BoardController {
 	@RequestMapping(value = "/selected", method = RequestMethod.POST) //default is GET
 	public String create(Board board, MultipartFile attachment){
 		log.debug("board:{}",board);
+		//
 		System.out.println("board" + board);
 		FileUploader.upload(attachment);
 		board.setFileName(attachment.getOriginalFilename());
@@ -97,5 +101,30 @@ public class BoardController {
 		
 		boardRepository.delete(id);
 		return "redirect:/board/list";
+	}
+	
+	@RequestMapping(value="/uploadFromIOS", method=RequestMethod.POST)
+	public @ResponseBody String uploadFromIOS(Board boardData, MultipartFile file) {
+			log.debug("Param boardData : {}", boardData);			
+			
+			String uploadFileName = FileUploader.upload(file);
+			boardData.setFileName(uploadFileName);
+			
+			Board savedBoardData = boardRepository.save(boardData);
+			
+			log.debug("savedBoardData : {}", savedBoardData.toString());
+			
+		
+			HashMap<String, String> result = new HashMap<String, String>();
+			result.put("result", "NO");
+			result.put("code", "400");
+		
+		if ( savedBoardData != null) {
+				result.put("result", "OK");
+				result.put("code", "200");
+		}
+		
+		Gson gson = new Gson();
+		return gson.toJson(result);
 	}
 }

@@ -31,16 +31,22 @@ public class CommentController {
 		return commentRepository.save(comment);
 	}
 	
-//	@RequestMapping(value ="/delete_comment/{id}")
-//	public String delete_comment(@PathVariable Long id){
+	@RequestMapping(value ="/delete_comment/{id}")
+	public String delete_comment(@PathVariable Long id){
+		
+		commentRepository.delete(id);
+		return "redirect:/board/list";
+	}
+	
+	
+	
+	
+	
+//	@RequestMapping(value="/delete_comment/{id}.json",method=RequestMethod.POST)
+//	public void delete_commentJson(@PathVariable Long id){
 //		commentRepository.delete(id);
-//		return "redirect:/board/list";
 //	}
 	
-	@RequestMapping(value="/delete_comment/{id}.json",method=RequestMethod.POST)
-	public void delete_commentJson(@PathVariable Long id){
-		commentRepository.delete(id);
-	}
 //	@RequestMapping(value ="/{id}/comment_ok.json", method = RequestMethod.POST)  
 //	public @ResponseBody Comment write_comment(@PathVariable Long id, String contents, String modify, HttpSession session){
 //		Board board = boardRepository.findOne(id);
